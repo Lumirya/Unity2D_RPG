@@ -1,0 +1,61 @@
+# =============== #
+# Unity Generated #
+# =============== #
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+
+# =============== #
+# Unity Cache     #
+# =============== #
+sysinfo.txt
+*.stacktrace
+
+# =============== #
+# User-specific   #
+# =============== #
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+*.pidb.meta
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# VS Code
+.vscode/
+
+# =============== #
+# OS Files        #
+# =============== #
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =============== #
+# Builds          #
+# =============== #
+*.apk
+*.aab
+*.app
+*.exe
+*.zip
+*.xcodeproj
+*.xcworkspace
+*.xcuserstate
