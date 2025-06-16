@@ -10,12 +10,18 @@ public class PlayerGroundedState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        rb.linearVelocity = new Vector2(0, 0); // Reset horizontal velocity to 0
         // Additional logic for entering the grounded state can be added here
     }
 
     public override void Update()
     {
         base.Update();
+        if (player.IsGroundDetected() == false)
+        {
+            // Transition to the air state when the player is not grounded
+            stateMachine.ChangeState(player.AirState);
+        }
 
         // if (xInput != 0)
         // {

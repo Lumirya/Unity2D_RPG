@@ -17,12 +17,20 @@ public class PlayerAirState : PlayerState
     {
         base.Update();
 
-        // if (xInput != 0)
-        // {
-        //     // Transition to the move state when there is horizontal input
-        //     stateMachine.ChangeState(player.MoveState);
-        // }
-        if (rb.linearVelocity.y == 0)
+        if (xInput != 0)
+        {
+            // Set horizontal velocity based on input, keeping vertical velocity unchanged
+            player.SetVelocity(xInput * player.moveSpeed*.8f, rb.linearVelocity.y);
+        }
+
+        if (player.IsWallDetected())
+        {
+            // If the player is touching a wall, switch to wall slide state
+            stateMachine.ChangeState(player.WallSlideState);
+            return;
+        }
+
+        if (player.IsGroundDetected())
         {
             // Transition to the grounded state when the player is falling
             stateMachine.ChangeState(player.IdleState);

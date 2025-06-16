@@ -11,10 +11,6 @@ public class PlayerJumpState : PlayerState
     {
         base.Enter();
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, player.jumpForce); // Set the vertical velocity to the jump force
-        Debug.Log("== Animator 状态测试 ==");
-        Debug.Log("Current State: " + player.anim.GetCurrentAnimatorStateInfo(0).shortNameHash);
-        Debug.Log("Is Jump/Fall? " + player.anim.GetCurrentAnimatorStateInfo(0).IsName("Jump/Fall"));
-
     } 
 
     public override void Update()

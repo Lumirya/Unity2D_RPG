@@ -7,7 +7,8 @@ public class PlayerState
 
     protected Rigidbody2D rb;
     protected float xInput;
-
+    protected float yInput;
+    protected float stateTimer;
     protected string animBoolName;
     public PlayerState(Player _player, PlayerStateMachine _stateMachine, string _animBoolName)
     {
@@ -23,7 +24,9 @@ public class PlayerState
 
     public virtual void Update()
     {
+        stateTimer -= Time.deltaTime;
         xInput = Input.GetAxisRaw("Horizontal");
+        yInput = Input.GetAxisRaw("Vertical");
         // Here you can add logic that should run every frame while in this state
         player.anim.SetFloat("yVelocity", rb.linearVelocity.y);
     }
