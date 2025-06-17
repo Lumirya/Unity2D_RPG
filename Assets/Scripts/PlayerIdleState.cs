@@ -10,12 +10,18 @@ public class PlayerIdleState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
+        player.ZeroVelocity();
     }
 
     public override void Update()
     {
         base.Update();
-        if (xInput != 0)
+        if (player.IsWallDetected() && xInput * player.facingDir > 0)
+        {
+            return;
+        }
+
+        if (xInput != 0 && !player.isBusy)
         {
             // Transition to the move state when there is horizontal input
             stateMachine.ChangeState(player.MoveState);

@@ -22,6 +22,11 @@ public class PlayerGroundedState : PlayerState
             // Transition to the air state when the player is not grounded
             stateMachine.ChangeState(player.AirState);
         }
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            stateMachine.ChangeState(player.PrimaryAttackState);
+            return;
+        }
 
         // if (xInput != 0)
         // {

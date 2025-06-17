@@ -161,6 +161,7 @@ GameObject:
   - component: {fileID: 491515909}
   - component: {fileID: 491515911}
   - component: {fileID: 491515910}
+  - component: {fileID: 491515912}
   m_Layer: 0
   m_Name: Animator
   m_TagString: Untagged
@@ -260,6 +261,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &491515912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 491515908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96d1345dff596054baa686485606a270, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -580,10 +593,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9ef2bbb324b4b340b5a65a88abe0ba8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackMovement:
+  - {x: 3, y: 1.5}
+  - {x: 1, y: 2.5}
+  - {x: 4, y: 1.5}
   moveSpeed: 5
   jumpForce: 20
   dashSpeed: 25
-  dashDuration: 0.25
+  dashDuration: 0.2
   dashCooldown: 1
   groundCheck: {fileID: 832037766}
   groundCheckDistance: 0.15

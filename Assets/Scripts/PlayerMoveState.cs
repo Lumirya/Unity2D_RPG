@@ -19,7 +19,7 @@ public class PlayerMoveState : PlayerGroundedState
 
         player.SetVelocity(xInput * player.moveSpeed, rb.linearVelocity.y); // Set horizontal velocity, keeping vertical velocity unchanged
 
-        if (xInput == 0)
+        if (xInput == 0 ||player.IsWallDetected())
         {
             // Transition back to the idle state when there is no horizontal input
             stateMachine.ChangeState(player.IdleState);

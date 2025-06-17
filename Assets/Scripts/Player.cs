@@ -1,7 +1,13 @@
 using UnityEngine;
+using System.Collections;
 
 public class Player : MonoBehaviour
 {
+    [Header("Attack details")]
+    public Vector2[] attackMovement;
+
+
+    public bool isBusy { get; private set; }  // 用于跟踪玩家是否忙碌
     [Header("Move info")]
     public float moveSpeed = 5f;
     public float jumpForce = 12f;
@@ -10,8 +16,8 @@ public class Player : MonoBehaviour
     public float dashDuration = 0.5f;
     public float dashCooldown = 1f; // 冲刺冷却时间
     private float dashUsageTimer = 0f; // 用于跟踪冲刺冷却时间
-    public float dashDir { get; private set; }  
-    
+    public float dashDir { get; private set; }
+
 
     [Header("Collision info")]
     [SerializeField] private Transform groundCheck;
@@ -40,6 +46,7 @@ public class Player : MonoBehaviour
     public PlayerDashState DashState { get; private set; }
     public PlayerWallSlideState WallSlideState { get; private set; }
     public PlayerWallJump WallJumpState { get; private set; }
+    public PlayerPrimaryAttackState PrimaryAttackState { get; private set; }
 
     #endregion
 
@@ -54,6 +61,7 @@ public class Player : MonoBehaviour
         DashState = new PlayerDashState(this, StateMachine, "Dash");
         WallSlideState = new PlayerWallSlideState(this, StateMachine, "WallSlide");
         WallJumpState = new PlayerWallJump(this, StateMachine, "Jump");
+        PrimaryAttackState = new PlayerPrimaryAttackState(this, StateMachine, "Attack");
     }
 
     private void Start()
@@ -71,10 +79,22 @@ public class Player : MonoBehaviour
         CheckForDashInput();
     }
 
+    public IEnumerator BusyFor(float _seconds)
+    {
+        isBusy = true; // 设置玩家为忙碌状态
+        yield return new WaitForSeconds(_seconds); // 等待指定的时间
+        isBusy = false; // 重置玩家为非忙碌状态
+    }
+
+    public void AnimationTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
     public void CheckForDashInput()
     {
+        if (IsWallDetected())
+        {
+            return;
+        }
         dashUsageTimer -= Time.deltaTime; // 更新冲刺冷却时间
-        if (Input.GetKeyDown(KeyCode.LeftShift)&& dashUsageTimer <=0f)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && dashUsageTimer <= 0f)
         {
             dashUsageTimer = dashCooldown; // 重置冲刺冷却时间
             dashDir = Input.GetAxisRaw("Horizontal");
@@ -85,12 +105,18 @@ public class Player : MonoBehaviour
             StateMachine.ChangeState(DashState);
         }
     }
+    #region Velocity
+    public void ZeroVelocity()
+    {
+        rb.linearVelocity = new Vector2(0, 0);
+    }
     public void SetVelocity(float _xVelocity, float _yVelocity)
     {
         rb.linearVelocity = new Vector2(_xVelocity, _yVelocity);
         FlipController(_xVelocity);
     }
-
+    #endregion
+    #region Collision
     public bool IsGroundDetected() => Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround);
     public bool IsWallDetected() => Physics2D.Raycast(wallCheck.position, Vector2.right * facingDir, wallCheckDistance, whatIsGround);
 
@@ -99,7 +125,9 @@ public class Player : MonoBehaviour
         Gizmos.DrawLine(groundCheck.position, groundCheck.position + Vector3.down * groundCheckDistance);
         Gizmos.DrawLine(wallCheck.position, wallCheck.position + Vector3.right * wallCheckDistance);
     }
+    #endregion
 
+    #region Flip
     public void Flip()
     {
         facingDir *= -1; // Toggle the facing direction
@@ -117,4 +145,5 @@ public class Player : MonoBehaviour
             Flip();
         }
     }
+    #endregion
 }
