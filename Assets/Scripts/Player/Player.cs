@@ -5,7 +5,7 @@ public class Player : Entity
 {
     [Header("Attack details")]
     public Vector2[] attackMovement;
-
+    
 
     public bool isBusy { get; private set; }  // 用于跟踪玩家是否忙碌
     [Header("Move info")]

@@ -19,28 +19,21 @@ public class SkeletonAttackState : EnemyState
     public override void Exit()
     {
         base.Exit();
+        enemy.lastTimeAttacked = Time.time;
         // Cleanup when exiting attack state
     }
 
     public override void Update()
     {
         base.Update();
-        // Logic for attacking the player
-        if (enemy.IsPlayerDetected())
-        {
-            if (enemy.IsPlayerDetected().distance < enemy.attackDistance)
-            {
-                Debug.Log("Attack Player");
-                enemy.SetZeroVelocity(); // Stop movement while attacking
-                // Trigger attack animation or logic here
-                return;
-            }
-        }
+
+        enemy.SetZeroVelocity(); // Stop movement while attacking
+
         if (triggerCalled)
         {
             // If the attack animation is done, return to battle state
             enemy.stateMachine.ChangeState(enemy.battleState);
-            return;
         }
+        
     }
 }
